@@ -1,0 +1,31 @@
+<div class="w-full max-w-md mx-auto mt-8">
+  <h1 class="font-bold text-3xl mb-6">Create Your Account</h1>
+  
+  <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <p class="text-gray-700 text-sm mb-4">Welcome to BookWrite! To get started, create your first account.</p>
+    
+    <%= form_with(model: @account, local: true) do |form| %>
+      <% if @account.errors.any? %>
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          <h2 class="text-sm font-bold mb-2">
+            <%= pluralize(@account.errors.count, "error") %> prohibited this account from being saved:
+          </h2>
+          <ul class="list-disc pl-5">
+            <% @account.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    
+      <div class="mb-4">
+        <%= form.label :name, class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= form.text_field :name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", placeholder: "Enter account name..." %>
+      </div>
+    
+      <div class="flex items-center justify-end">
+        <%= form.submit "Create Account", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+      </div>
+    <% end %>
+  </div>
+</div> 
