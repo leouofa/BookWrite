@@ -1,0 +1,49 @@
+<div class="w-full">
+  <div class="flex justify-between items-center mb-8">
+    <div>
+      <h1 class="font-bold text-3xl"><%= @account.name %></h1>
+      <% if current_user.owner_of?(@account) %>
+        <span class="bg-blue-100 text-blue-800 text-xs font-medium py-0.5 px-2 rounded">Owner</span>
+      <% end %>
+    </div>
+    
+    <div class="text-right">
+      <%= link_to "Back to Accounts", accounts_path, class: "text-blue-600 hover:underline mr-4" %>
+      
+      <% if user_signed_in? %>
+        <p class="mb-2">Logged in as: <strong><%= current_user.email %></strong></p>
+        <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" %>
+      <% end %>
+    </div>
+  </div>
+  
+  <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <h2 class="text-xl font-semibold mb-4">Account Details</h2>
+    
+    <div class="mb-6">
+      <p class="text-gray-700">
+        <strong>Name:</strong> <%= @account.name %>
+      </p>
+      <p class="text-gray-700">
+        <strong>Created:</strong> <%= @account.created_at.strftime("%B %d, %Y") %>
+      </p>
+    </div>
+    
+    <div class="mb-6">
+      <h3 class="text-lg font-medium mb-2">Members</h3>
+      <ul class="divide-y divide-gray-200">
+        <% @account.memberships.includes(:user).each do |membership| %>
+          <li class="py-2 flex justify-between items-center">
+            <span><%= membership.user.email %></span>
+            <% if membership.owner %>
+              <span class="bg-blue-100 text-blue-800 text-xs font-medium py-0.5 px-2 rounded">Owner</span>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    
+    <!-- Future content will go here -->
+    <p class="text-gray-700">More account features coming soon...</p>
+  </div>
+</div> 
